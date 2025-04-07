@@ -2,9 +2,11 @@ import { MovieCode, Movie } from "./statement.interface";
 import { rentalRates } from "./config";
 
 export const calculateAmount = (movie: Movie, days: number): number => {
-  const rate = rentalRates[movie.code];
+  const { code } = movie;
+  const rate = rentalRates[code];
+  
   if (!rate) {
-    throw new Error(`Invalid movie code: ${movie.code}`);
+    throw new Error(`Invalid movie code: ${code}`);
   }
 
   const { basePrice, baseDays, extraDayCharge } = rate;

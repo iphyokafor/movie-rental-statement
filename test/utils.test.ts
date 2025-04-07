@@ -2,11 +2,14 @@ import { rentalRates } from "../src/config";
 import { Movie, MovieCode } from "../src/statement.interface";
 import { calculateAmount, calculatePoints, formatRental } from "../src/utils";
 
+const mockMovie: Movie = {
+  code: MovieCode.REGULAR,
+  title: "Back to Action",
+};
 describe("Utils Tests", () => {
-  const mockMovie: Movie = {
-    code: MovieCode.REGULAR,
-    title: "Back to Action",
-  };
+  beforeEach(() => {
+    jest.clearAllMocks()
+  });
 
   describe("calculateAmount", () => {
     const rate = rentalRates[MovieCode.REGULAR];

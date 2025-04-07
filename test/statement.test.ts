@@ -2,10 +2,14 @@ import { describe, it, expect } from "@jest/globals";
 import { customer, movies } from "../src/test-data";
 import { calculateRentalSummary, statement } from "../src/statement";
 
-describe("Statement Tests", () => {
-  const testMovies = movies;
-  const testCustomer = customer;
+const testMovies = movies;
+const testCustomer = customer;
 
+describe("Statement Tests", () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  });
+  
   it("should calculate rental summary correctly", () => {
     const summary = calculateRentalSummary(testCustomer.rentals, testMovies);
 
