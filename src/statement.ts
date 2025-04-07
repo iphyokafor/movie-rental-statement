@@ -7,7 +7,10 @@ import {
 import { customer, movies } from "./test-data";
 import { calculateAmount, calculatePoints, formatRental } from "./utils";
 
-export const calculateRentalSummary = (rentals: Rental[], movies: Movies): RentalAccumulator => {
+export const calculateRentalSummary = (
+  rentals: Rental[],
+  movies: Movies
+): RentalAccumulator => {
   return rentals.reduce(
     (acc: RentalAccumulator, rental) => {
       const { movieID, days } = rental;

@@ -1,7 +1,4 @@
-import {
-  MovieCode,
-  Movie,
-} from "./statement.interface";
+import { MovieCode, Movie } from "./statement.interface";
 import { rentalRates } from "./config";
 
 export const calculateAmount = (movie: Movie, days: number): number => {
