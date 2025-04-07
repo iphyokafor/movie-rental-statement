@@ -5,29 +5,33 @@ import { calculateAmount, calculatePoints, formatRental } from "../src/utils";
 describe('Utils Tests', () => {
     const mockMovie: Movie = {
         code: MovieCode.REGULAR,
-        title: 'Test Movie'
+        title: 'Back to Action',
     };
 
     describe('calculateAmount', () => {
-        it('should calculate correct amount for base days', () => {
-            const amount = calculateAmount(mockMovie, rentalRates[MovieCode.REGULAR].baseDays);
-            expect(amount).toBe(rentalRates[MovieCode.REGULAR].basePrice);
+        const rate = rentalRates[MovieCode.REGULAR];
+        const { basePrice, baseDays, extraDayCharge } = rate;
+
+        it('calculates amount for base days (no extra)', () => {
+            const amount = calculateAmount(mockMovie, baseDays);
+            expect(amount).toBe(basePrice);
         });
 
-        it('should calculate correct amount with extra days', () => {
+        it('calculates amount with extra days', () => {
             const extraDays = 2;
-            const totalDays = rentalRates[MovieCode.REGULAR].baseDays + extraDays;
+            const totalDays = baseDays + extraDays;
+            const expectedAmount = basePrice + (extraDays * extraDayCharge);
+
             const amount = calculateAmount(mockMovie, totalDays);
-            const expected = rentalRates[MovieCode.REGULAR].basePrice +
-                (extraDays * rentalRates[MovieCode.REGULAR].extraDayCharge);
-            expect(amount).toBe(expected);
+            expect(amount).toBe(expectedAmount);
         });
 
-        it('should throw error for invalid movie code', () => {
+        it('throws error for invalid movie code', () => {
             const invalidMovie = { ...mockMovie, code: 'INVALID' as MovieCode };
             expect(() => calculateAmount(invalidMovie, 1)).toThrow('Invalid movie code');
         });
     });
+
 
     describe('calculatePoints', () => {
         it('should return 1 point for regular movies', () => {
@@ -51,7 +55,7 @@ describe('Utils Tests', () => {
     describe('formatRental', () => {
         it('should format rental string correctly', () => {
             const formattedString = formatRental(mockMovie, 10);
-            expect(formattedString).toBe('\tTest Movie\t10\n');
+            expect(formattedString).toBe('\tBack to Action\t10\n');
         });
     });
 });
